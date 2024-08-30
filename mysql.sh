@@ -43,5 +43,14 @@ VALIDATE $? "Enabled MySQL Server"
 systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started MySQL Server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
-VALIDATE $? "Setting Up Root Pasword"
+mysql -h mysql.manibhumaraju.online -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
+if [ $? -ne 0 ]
+then
+    echo "MySQL root password not setup, Setting now" &>>$LOG_FILE
+    mysql_secure_installation --set-root-pass ExpenseApp@1
+    VALIDATE $? "Setting Up Root Pasword"
+else
+    echo "MySQL root password is Already Setup,$Y Skipping $N" | tee -a $LOG_FILE
+fi
+
+
