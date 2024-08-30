@@ -34,50 +34,26 @@ echo "Script started exectuing at: $(date)" | tee -a $LOG_FILE
 
 CHECK_ROOT
 
-# dnf install nginx -y &>>$LOG_FILE
-# VALIDATE $? "Installing Nginx"
-
-# systemctl enable nginx &>>$LOG_FILE
-# VALIDATE $? "Enableing Nginx"
-
-# systemctl start nginx &>>$LOG_FILE
-# VALIDATE $? "Starting Nginx"
-
-# rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
-# VALIDATE $? "Removing Deafult Website"
-
-# curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE
-# VALIDATE $? "Downloading Frontend code"
-
-# cd /usr/share/nginx/html
-# unzip /tmp/frontend.zip &>>$LOG_FILE
-# VALIDATE $? "Extracting Frontend Code"
-
-# cp /home/ec2-user/expense-shell/expense.conf /etc/nginx/default.d/expense.conf
-# VALIDATE $? "Copy expense conf"
-
-# systemctl restart nginx
 dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Installing Nginx"
 
 systemctl enable nginx &>>$LOG_FILE
-VALIDATE $? "Enable Nginx"
+VALIDATE $? "Enableing Nginx"
 
 systemctl start nginx &>>$LOG_FILE
-VALIDATE $? "Start Nginx"
+VALIDATE $? "Starting Nginx"
 
 rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
-VALIDATE $? "Removing default website"
+VALIDATE $? "Removing Deafult Website"
 
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE
-VALIDATE $? "Downloding frontend code"
+VALIDATE $? "Downloading Frontend code"
 
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>$LOG_FILE
-VALIDATE $? "Extract frontend code"
+VALIDATE $? "Extracting Frontend Code"
 
 cp /home/ec2-user/expense-shell/expense.conf /etc/nginx/default.d/expense.conf
-VALIDATE $? "Copied expense conf"
+VALIDATE $? "Copy expense conf"
 
-systemctl restart nginx &>>$LOG_FILE
-VALIDATE $? "Restarted Nginx"
+systemctl restart nginx
